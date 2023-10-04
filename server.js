@@ -9,11 +9,12 @@ import cors from "cors";
 const app = express();
 const port = 3001;
 const __dirname = dirname( fileURLToPath( import.meta.url ) );
+const dbURI = "mongodb+srv://Eiad:Dody_1422003_Eiad@cluster0.41cpwma.mongodb.net/?retryWrites=true&w=majority";
 
 app.use(cors());
 app.use( bodyParser.urlencoded( {extended:true} ) );
 
-await mongoose.connect("mongodb://localhost:27017/todoDB" , {family: 4}).then(console.log("Connected to Database"));
+await mongoose.connect(dbURI , {family: 4}).then(console.log("Connected to Database"));
 
 app.post("/register", async (req,res)=>{
     const username = req.body.username.toLowerCase();
