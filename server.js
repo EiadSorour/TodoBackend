@@ -11,13 +11,16 @@ const port = 3001;
 const __dirname = dirname( fileURLToPath( import.meta.url ) );
 const dbURI = "mongodb+srv://Eiad:Dody_1422003_Eiad@cluster0.41cpwma.mongodb.net/?retryWrites=true&w=majority";
 
+//Local development
+//const dbURI = "mongodb://localhost:27017/todoDB";
+
 app.use(cors());
 app.use( bodyParser.urlencoded( {extended:true} ) );
 
 await mongoose.connect(dbURI , {family: 4}).then(console.log("Connected to Database"));
 
 app.post("/register", async (req,res)=>{
-    const username = req.body.username.toLowerCase();
+    const username = req.body.username.toLowerCase().trim();
     const password = req.body.password;
     const checkExistance = await User.find({username: username});
     if(checkExistance.length > 0){
@@ -33,7 +36,7 @@ app.post("/register", async (req,res)=>{
 });
 
 app.post("/login", async (req,res)=>{
-    const username = req.body.username.toLowerCase();
+    const username = req.body.username.toLowerCase().trim();
     const password = req.body.password;
     try{
         const user = await User.findOne({username: username, password: password});
